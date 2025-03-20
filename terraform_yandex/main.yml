@@ -1,0 +1,22 @@
+---
+- name: Изменить имя хоста
+  become: yes
+  hostname:
+    name: "{{ inventory_hostname }}"
+
+- name: Обновить apt-репозитории
+  become: yes
+  apt:
+    update_cache: yes
+
+- name: Установить стандартные пакеты
+  become: yes
+  apt:
+    name:
+      - net-tools
+      - dnsutils
+      - wget
+      - curl
+      - mc
+      - rsync
+    state: present

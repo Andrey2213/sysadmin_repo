@@ -1,0 +1,14 @@
+---
+- name: Установка nginx
+  become: yes
+  apt:
+    name: nginx
+    state: present
+    update_cache: yes
+
+- name: Развертывание кастомной страницы
+  become: yes
+  template:
+    src: index.j2
+    dest: /var/www/html/index.nginx-debian.html
+  notify: Перезапустить nginx

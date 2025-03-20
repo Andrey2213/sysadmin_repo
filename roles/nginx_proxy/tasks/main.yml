@@ -1,0 +1,21 @@
+---
+- name: Установка nginx
+  become: yes
+  apt:
+    name: nginx
+    state: present
+    update_cache: yes
+
+- name: Развертывание конфигурации прокси для nginx
+  become: yes
+  template:
+    src: proxy_nginx.j2
+    dest: /etc/nginx/sites-available/default
+  notify: Перезапустить nginx
+
+- name: Открытие 3000 порта в ufw (если используется)
+  become: yes
+  ufw:
+    rule: allow
+    port: '3000'
+    proto: tcp
